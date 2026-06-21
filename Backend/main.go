@@ -2,22 +2,38 @@ package main
 
 import "fmt"
 
+type Describable interface {
+	Describe() string
+}
+
 type Book struct {
 	Title string
 	Pages int
 	IsRead bool
+}
+type Movie struct {
+	Title string
+	Length int
 }
 
 func (b *Book) MarkAsRead() {
 	b.IsRead = true
 }
 
-func (b Book) Summary() string {
+func (b Book) Describe() string {
 	status := "Unread"
 	if b.IsRead {
 		status = "Read"
 	}
 	return fmt.Sprintf("%s (%d pages) - %s", b.Title, b.Pages, status)
+}
+
+func (m Movie) Describe() string {
+	return fmt.Sprintf("%s (%d min)", m.Title, m.Length)
+}
+
+func PrintDescription(s Describable) {
+	fmt.Println(s.Describe())
 }
 
 func CountUnread(myBooks []Book) int {
@@ -32,7 +48,7 @@ func CountUnread(myBooks []Book) int {
 }
 
 func IncrementPageCount(pages *int) {
-	*pages = *pages + 1
+	*pages++
 }
 
 func SwapPageCount(a, b *int) {
@@ -47,19 +63,7 @@ func main() {
 		{Title: "Raytracer Challange", Pages: 361, IsRead: false},
 		{Title: "How to get over a Breakup", Pages: 211, IsRead: false},
 	}
-	pageCount := map[int]*int{
-		0: &myBooks[0].Pages,
-		1: &myBooks[1].Pages,
-		2: &myBooks[2].Pages,
-	}
-	val, exists := pageCount[0]
-	fmt.Println(*val, exists)
-	IncrementPageCount(&myBooks[0].Pages)
-	val, exists = pageCount[0]
-	fmt.Println(*val, exists)
-	fmt.Println(myBooks[0].Pages)
-	fmt.Println(myBooks[1].Pages)
-	SwapPageCount(&myBooks[0].Pages, &myBooks[1].Pages)
-	fmt.Println(myBooks[0].Pages)
-	fmt.Println(myBooks[1].Pages) 
+	myMovie := Movie{Title: "Idiocracy", Length: 220}
+	PrintDescription(myBooks[0])
+	PrintDescription(myMovie)
 }
