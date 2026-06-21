@@ -2,45 +2,27 @@ package main
 
 import "fmt"
 
-func safeDivide(a, b int) (int, error) {
-	if b == 0 {
-		return 0, fmt.Errorf("non dividable")
-	} else {
-		return a / b, nil
-	}
+type Book struct {
+	Title string
+	Pages int
+	IsRead bool
 }
 
-func isPrime(n int) bool {
-	if n <= 1 {
-		return false
+func (b *Book) MarkAsRead() {
+	b.IsRead = true
+}
+
+func (b Book) Summary() string {
+	status := "Unread"
+	if b.IsRead {
+		status = "Read"
 	}
-	for tmp := 2; tmp < n; tmp++ {
-		if n % tmp == 0 {
-			return false
-		}
-	}
-	return true
+	return fmt.Sprintf("%s (%d pages) - %s", b.Title, b.Pages, status)
 }
 
 func main() {
-	result, err := safeDivide(10, 2)
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(result)
-	}
-	result, err = safeDivide(10, 0)
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(result)
-	}
-	for tmp := 0; tmp <= 50; tmp++ {
-		check := isPrime(tmp)
-		if check {
-			fmt.Printf("%d is prime\n", tmp)
-		} else {
-			fmt.Printf("%d isn't prime\n", tmp)
-		}
-	}
+	myBook := Book {Title: "Moby Dick", Pages : 150, IsRead: false}
+	fmt.Println(myBook.Summary())
+	myBook.MarkAsRead()
+	fmt.Println(myBook.Summary())
 }
