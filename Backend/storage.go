@@ -7,6 +7,9 @@ import (
 
 var todos []ToDo
 
+var ErrInvalidID = fmt.Errorf("ID cant be lower than 1")
+var ErrTodoNotFound = fmt.Errorf("task could'nt be found")
+
 func addTodo(title string) ToDo {
 	var task ToDo
 	task.ID = len(todos) + 1
@@ -21,14 +24,14 @@ func addTodo(title string) ToDo {
 
 func findTodoByID(id int) (*ToDo, error) {
 	if id == 0 {
-		return nil, fmt.Errorf("ID cant be lower than 1")
+		return nil, ErrInvalidID
 	}
 	for index := range todos {
 		if id == todos[index].ID { 
 			return &todos[index], nil
 		}
 	}
-	return nil, fmt.Errorf("task could'nt be found")
+	return nil, ErrTodoNotFound
 }
 
 func setStatus(id int, newStatus Progression) error {
