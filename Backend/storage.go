@@ -40,6 +40,7 @@ func setStatus(id int, newStatus Progression) error {
 		return err
 	}
 	task.Status = newStatus
+	task.UpdatedAt = time.Now()
 	return nil
 }
 
@@ -49,5 +50,6 @@ func setPriority(id int, newPriority Priority) error {
 		return err
 	}
 	task.Role = newPriority
+	task.UpdatedAt = time.Now()
 	return nil
 }
