@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-var todos []ToDo
+var todos = []ToDo{}
 
 var ErrInvalidID = fmt.Errorf("ID cant be lower than 1")
 var ErrTodoNotFound = fmt.Errorf("task could'nt be found")

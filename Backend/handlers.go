@@ -46,10 +46,12 @@ func updateTodoHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(getTodos())
 }
 
 func todoHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	if r.Method == "POST" {
 		var request CreateTodoRequest
 		json.NewDecoder(r.Body).Decode(&request)
